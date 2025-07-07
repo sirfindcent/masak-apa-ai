@@ -1,8 +1,3 @@
-### TODO CREATE GIT REPO
-### TODO Dont say the user
-### Push to repo
-### Readme
-
 import streamlit as st
 import ollama
 
