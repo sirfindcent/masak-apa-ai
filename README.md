@@ -1,6 +1,8 @@
 # 🍲 Masak Apa AI
 
-A Streamlit app that suggests Indonesian recipes based on ingredients you provide. It uses a locally-run `deepseek-r1` model via Ollama to generate real-time, streaming responses.
+A Streamlit app that suggests Indonesian recipes based on ingredients you provide. It uses a locally-run `deepseek-r1` model via Ollama to generate real-time streaming responses.
+
+**Project Demo:** [Watch the Video on YouTube](https://youtu.be/n0UKRMAHpRg)
 
 ![Masak Apa AI Screenshot](preview.png)
 
