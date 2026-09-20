@@ -3,7 +3,8 @@ import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from openai import OpenAI
+from google import genai
+from google.genai import types
 from pydantic import BaseModel
 
 
@@ -54,51 +55,47 @@ def get_recipe_suggestions(request: RecipeRequest):
             detail="At least one ingredient is required.",
         )
 
-    api_key = os.getenv("OPENAI_API_KEY")
-
-    if not api_key:
+    if not os.getenv("GEMINI_API_KEY"):
         raise HTTPException(
             status_code=500,
-            detail="LLM service is not configured.",
+            detail="AI service is not configured.",
         )
-
-    client = OpenAI(api_key=api_key)
 
     try:
-        response = client.responses.parse(
-            model="gpt-5.6-luna",
-            input=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are an expert Indonesian cooking assistant. "
-                        "Suggest 3 to 5 Indonesian dishes that make practical "
-                        "use of the user's available ingredients. "
-                        "Keep each description to one sentence. "
-                        "matchedIngredients must contain only ingredients "
-                        "from the user's provided list. "
-                        "Prefer recipes requiring minimal additional ingredients."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": (
-                        "Available ingredients: "
-                        + ", ".join(ingredients)
-                    ),
-                },
-            ],
-            text_format=RecipeResponse,
+        client = genai.Client()
+
+        prompt = f"""
+You are an expert Indonesian cooking assistant.
+
+Available ingredients:
+{", ".join(ingredients)}
+
+Suggest 3 to 5 Indonesian dishes.
+
+Requirements:
+- Keep each description to one sentence.
+- matchedIngredients must contain only ingredients supplied by the user.
+- Prefer dishes requiring minimal additional ingredients.
+- Always respond in English.
+"""
+
+        response = client.models.generate_content(
+            model="gemini-3.5-flash-lite",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=RecipeResponse,
+            ),
         )
 
-        result = response.output_parsed
+        if not response.text:
+            raise ValueError("Gemini returned an empty response.")
 
-        if result is None:
-            raise ValueError("Model did not return structured recipe data.")
+        return RecipeResponse.model_validate_json(response.text)
 
-        return result
+    except Exception as e:
+        print("GEMINI ERROR:", repr(e))
 
-    except Exception:
         raise HTTPException(
             status_code=502,
             detail="Recipe generation failed. Please try again.",

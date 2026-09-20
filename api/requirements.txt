@@ -1,5 +1,5 @@
 fastapi
-openai
+google-genai
 python-dotenv
 pytest
 httpx
