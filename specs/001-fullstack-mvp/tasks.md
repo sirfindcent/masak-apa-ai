@@ -2,39 +2,52 @@
 
 ## Phase 1 — Frontend
 
-- [ ] Create Next.js + TypeScript frontend
-- [ ] Build ingredient input form
-- [ ] Validate empty input
-- [ ] Add loading state
-- [ ] Add error state
-- [ ] Display recipe cards
+- [x] Create Next.js + TypeScript frontend
+- [x] Build ingredient input form
+- [x] Validate empty input
+- [x] Add loading state
+- [x] Add error state
+- [x] Display recipe cards
 
 ## Phase 2 — Backend
 
-- [ ] Create FastAPI backend
-- [ ] Create `POST /api/suggestions`
-- [ ] Define request model
-- [ ] Define response model
-- [ ] Build recipe generation prompt
-- [ ] Connect hosted LLM API
-- [ ] Return structured JSON
+- [x] Create FastAPI backend
+- [x] Create `POST /api/suggestions`
+- [x] Define request model
+- [x] Define response model
+- [x] Build recipe generation prompt
+- [x] Connect Gemini API
+- [x] Return structured JSON
 
 ## Phase 3 — Integration
 
-- [ ] Connect frontend to FastAPI
-- [ ] Test successful recipe generation
-- [ ] Test empty input
-- [ ] Test backend error handling
+- [x] Connect frontend to FastAPI
+- [x] Test successful recipe generation
+- [x] Test empty input
+- [x] Test backend error handling
 
-## Phase 4 — Deployment
+## Phase 4 — Testing and CI
 
-- [ ] Configure environment variables
-- [ ] Deploy application
-- [ ] Test production URL
-- [ ] Confirm API key is not exposed
+- [x] Add backend API tests
+- [x] Test API health endpoint
+- [x] Verify frontend production build
+- [x] Configure GitHub Actions CI
+- [x] Run backend tests in CI
+- [x] Run frontend build in CI
 
-## Phase 5 — Verification
+## Phase 5 — Deployment
 
-- [ ] Compare implementation against `spec.md`
-- [ ] Confirm all acceptance criteria pass
-- [ ] Update README
+- [x] Configure production environment variables
+- [x] Configure Vercel services and routing
+- [x] Configure GitHub Actions deployment workflow
+- [x] Deploy application to Vercel
+- [x] Test production URL
+- [x] Confirm API key is not exposed
+- [x] Confirm production frontend calls FastAPI successfully
+
+## Phase 6 — Verification
+
+- [x] Compare implementation against `spec.md`
+- [x] Confirm all acceptance criteria pass
+- [x] Update README
+- [x] Remove unnecessary `.DS_Store` files
